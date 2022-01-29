@@ -1,0 +1,5 @@
+﻿/.vs
+*.suo
+*.sqlite
+obj/
+bin/
