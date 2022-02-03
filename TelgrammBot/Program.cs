@@ -5,7 +5,6 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Extensions.Polling;
-
 namespace Telegram.Bots
 {
     class Program
@@ -15,34 +14,18 @@ namespace Telegram.Bots
             public static readonly string BotToken = "5275938900:AAGSYvfMIJYdrcYym_9SVxEEpfqI8sT5CMw";
 
         }
-        //static ITelegramBotClient botClient;
         static void Main(string[] args)
         {
           var bot  = new BotWorker();  
           bot.Initialize();
             bot.Start();
-
             string command;
             do
             {
                 command = Console.ReadLine();
-
             } while (command != "stop");
-
             bot.Stop();
-
-            //var me = botClient.GetMeAsync().Result;     Для проверки работы !!!!
-            //Console.WriteLine($" Hello my name is {me.FirstName}");  НЕ НУЖНО !!!!
-
-            //botClient.OnMessage += Bot_OnMessage;
-            //botClient.StartReceiving();
-            //Console.WriteLine("Нажмите любую кнопку для остановки");
-            //Console.ReadKey();
-            //botClient.StopReceiving();
-
         }
-
-
         public class BotWorker
         {
             private BotMessageLogic logic;
@@ -60,7 +43,6 @@ namespace Telegram.Bots
             public async void Start()
             {
                 botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync, receiverOptions,cancellationToken: cts);
-                //botClient.GetUpdatesAsync().Wait(); 
             }
             async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
             {
@@ -74,8 +56,6 @@ namespace Telegram.Bots
                 var messageText = update.Message.Text;
 
                 Console.WriteLine($"Received a '{messageText}' message in chat {chatId}.");
-
-                // Echo received message text
                 Message sentMessage = await botClient.SendTextMessageAsync(
                     chatId: chatId,
                     text: "You said:\n" + messageText,
@@ -167,7 +147,6 @@ namespace Telegram.Bots
                 }
                 return textMessages;
             }
-            
         }
         public class Messanger
         {
@@ -177,8 +156,6 @@ namespace Telegram.Bots
                 var text = string.Join(delimiter, chat.GetTextMessages().ToArray());
                 return text;
             }
-
         }
     }
-    
 }
